@@ -1,0 +1,70 @@
+{% extends "registration/base.html" %}
+
+{% load bootstrap3 %}
+{% load static %}  
+
+{% block title %}SIEI-IFFar | Login{% endblock %}
+
+{% block content %}
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+        <br> 
+        <h2 align='center'>Sistema de Informação para Coleta de Indicadores de Atletas em Esportes de Invasão | SIEI</h2>
+        <h3 align='center'>IFFar Santo Augusto</h3>
+        <hr>
+        <p>
+          Este projeto faz parte do Laboratório de Práticas da Computação UFN, em que alunos dos cursos da área de Computação podem praticar o desenvolvimento de sistema Web Python-Django. Além disso, é uma parceria com o professor de Educação Física Fabrício Doring Martins do IFF de Santo Augusto - RS.
+        </p>
+        <p>
+          Integrantes:
+        </p>
+        <ul>
+          <li>Fabrício Doring Martins - professor de Educação Física (IFFar Santo Augusto) - líder do projeto</li>
+          <li>Alexandre Zamberlan - integrante Laboratório de Práticas da Computação UFN - responsável técnico</li>
+          <li>Sylvio Vieira - coordenador do Laboratório de Práticas da Computação UFN</li>
+          <li>Camille Rodrigues - Aluna voluntária do curso Sistemas de Informação UFN</li>          
+          <li>Gabriel Morais - Aluno voluntário do curso Ciência da Computação UFN</li>
+        </ul>
+        <hr>
+        <p align='center'>
+          <span class="label label-warning"> Contate lapinf@ufn.edu.br para informações.</span>
+          {% comment %} <a class="btn btn-info" style="width:100%;" href="mailto:lapinf@ufn.edu.br?subject=Assunto do email&bcc=alexz@ufn.edu.br&body=Conteúdo do email ...">{% bootstrap_icon 'glyphicon glyphicon-envelope' %} Para mais informações contate lapinf.ufn.edu.br</a> {% endcomment %}
+        </p>
+      </div> 
+      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+        {% comment %} <div class="col-sm-6 col-md-4 col-md-offset-4"> {% endcomment %}
+            <div class="text-center">
+              <br> 
+              <h2>LOGO SIEI | IFFar Santo Augusto</h2>
+              <!-- <img src="{% static 'core/img/logo_lapinf_hor.png' %}"
+                   class="img-fluid" style="max-width: 280px;">                             -->
+            </div>  
+            <br>
+              <div class="account-wall">
+                <form class="form-signin" method="POST">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <span class="clearfix"></span>
+                <p style="text-align:center;">
+                  <button type="submit" style="width:100%;" class="btn btn-primary btn-small" >
+                    {% bootstrap_icon 'glyphicon glyphicon-off' %} Entrar
+                  </button>
+                </p>
+                <p style="text-align:center;">
+                  <a class="btn btn-info" style="width:49%;" href="{% url 'usuario_register' %}">{% bootstrap_icon 'glyphicon glyphicon-user' %} Criar conta</a>
+                  <a class="btn btn-warning" style="width:49%;" href="{% url 'password_reset' %}">{% bootstrap_icon 'glyphicon glyphicon-flag' %} Resetar senha</a>
+                </p>
+                </form>
+              </div>
+              <br>
+              <div class="text-center">
+                <a href="https://lapinf.ufn.edu.br" target="_blank"><img src="{% static 'core/img/logo_lapinf_hor.png' %}"
+                  style="width: 140px;"></a>                         
+              </div>
+              <div align="center">
+                <hr>
+                <p>Todos os direitos reservados | Desde 2025.</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

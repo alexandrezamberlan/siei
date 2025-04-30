@@ -1,0 +1,549 @@
+{% extends 'core/impressoes/base.html' %}
+
+{% block content %}
+<table>
+    <tbody>
+        <tr>
+            <td style="text-align: center;">
+                <h1>PARECERES DE AVALIAÇÃO DE TCC</h1>
+                <hr style="color: #777777;">
+                <br>
+            </td>
+            
+        </tr>
+        <tr>
+            <td>
+                <h3>Turma e curso:  {{object.submissao.turma}} </h3>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Nome e matrícula do estudante: {{ object.submissao.aluno }} </h3>
+            </td>
+        <tr>
+            <td>
+                <h3>Título do TCC: {% if object.submissao.titulo %} {{ object.submissao.titulo }} {% else %} Não informado pelo aluno {% endif %} </h3>
+            </td>
+    </tbody>
+</table>
+
+<!-- ORIENTADOR -->
+<hr>
+<h3>Nome do avaliador orientador: {{ object.submissao.orientador.nome }}</h3>
+<hr>
+<table>
+    <thead>
+        <tr>
+            <td><h3>CRITÉRIOS AVALIADOS</h3></td>
+            <td style="text-align: center;"><h3>PESO</h3></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                ACOMPANHAMENTO: 
+                <ul>
+                    <li>Interesse demonstrado, iniciativa no desenvolvimento do trabalho,<br>frequência e participação nos encontros com o professor orientador.</li>
+                </ul>
+            </td>
+            <td style="text-align: center;">{{ object.dic_pesos.merito_acompanhamento_orientador }}</td>
+        </tr>
+        <tr>
+            <td>
+                DESENVOLVIMENTO:
+                <ul>
+                    <li>Adequação entre teoria, método e objetivos; Atualização e adequação da bibliografia selecionada; Domínio do referencial teórico e bibliográfico;
+                        Análise crítica do problema e da solução; Contribuição pessoal; 
+                        Contribuição para a área de conhecimento (aplicabilidade e/ou<br>características inovadoras);
+                        Consistência com a proposta apresentada.</li>
+                  </ul>
+            </td>
+            <td style="text-align: center;">{{ object.dic_pesos.merito_desenvolvimento_orientador }}</td>
+        </tr>
+        <tr>
+            <td>
+                REDAÇÃO:
+                <ul>
+                    <li>Organização do trabalho; Coerência interna e progressão lógico-semântica;
+                    Bibliografia adequada e completa;
+                    Atendimento as normas SBC;
+                    Redação clara e inteligível com correção gramatical;
+                    Introdução objetiva e precisa;
+                    Conclusão crítica.</li>                  
+                  </ul>
+            </td>
+            <td style="text-align: center;">{{ object.dic_pesos.merito_redacao_orientador }}</td>
+        </tr>
+        <tr>
+            <td>
+                APRESENTAÇÃO:
+                <ul>
+                    <li>Domínio do Assunto;
+                    Organização do Conteúdo;
+                    Distribuição adequada do tempo.</li>
+                  </ul>
+            </td>
+            <td style="text-align: center;">{{ object.dic_pesos.merito_apresentacao_orientador }}</td>
+        </tr>
+    </tbody>
+</table>
+<hr>
+<table>
+    <thead>
+        <tr>
+            <td><h3>PARECER</h3></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            {% if object.rebanca == 'SIM' %}
+                <td style="text-justify: newspaper;">
+                    {{ object.parecer_rebanca_avaliador_orientador|linebreaks }}
+                </td>
+            {% else %}
+                <td style="text-justify: newspaper;">
+                    {{ object.parecer_avaliador_orientador|linebreaks }}
+                </td>
+            {% endif %}
+        </tr>
+        {% if object.arquivo_corrigido_orientador %}
+            <tr>
+                <td>
+                    <br><br>O avaliador disponibilizou arquivo .pdf do TCC com sugestões/correções ao aluno.
+                </td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+<hr>
+<table>
+    <thead>
+        <tr>
+            <td><h3>NOTA</h3></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                {{ object.nota_final_orientador }} - 
+                {% if object.nota_final_orientador >= 7 %}
+                    APROVADO
+                {% else %}
+                    REPROVADO
+                {% endif%}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <hr>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">
+                <br><br>
+                {{ object.submissao.orientador.nome}}
+                <br>
+                <br>
+                Data da emissão do parecer: 
+                {% if object.dt_avaliacao_orientador %}
+                    {{ object.dt_avaliacao_orientador }}
+                {% else %}
+                    Parecer digitado pelo Coordenador de TCC
+                {% endif %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<p style="text-align: justify;">
+    O arquivo para impressão do parecer é gerado automaticamente pelo Sistema TFGOnline, no momento em que 
+    todos os professores avaliadores enviam suas notas e seus comentários sobre o trabalho disponibilizado à avaliação.
+</p>
+
+<!-- AVALIADOR 1 -->
+<div>
+    <pdf:nextpage />
+</div>
+<hr>
+<h3>Nome do avaliador 1: {{ object.avaliador_responsavel.nome }}</h3>
+<hr>
+<table>
+    <thead>
+        <tr>
+            <td><h3>CRITÉRIOS AVALIADOS</h3></td>
+            <td style="text-align: center;"><h3>PESO</h3></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                DESENVOLVIMENTO:
+                <ul>
+                    <li>Adequação entre teoria, método e objetivos; Atualização e adequação da bibliografia selecionada; Domínio do referencial teórico e bibliográfico;
+                        Análise crítica do problema e da solução; Contribuição pessoal; 
+                        Contribuição para a área de conhecimento (aplicabilidade e/ou<br>características inovadoras);
+                        Consistência com a proposta apresentada.</li>
+                  </ul>
+            </td>
+            <td style="text-align: center;">{{ object.dic_pesos.merito_desenvolvimento_responsavel_suplente }}</td>
+        </tr>
+        <tr>
+            <td>
+                REDAÇÃO:
+                <ul>
+                    <li>Organização do trabalho; Coerência interna e progressão lógico-semântica;
+                    Bibliografia adequada e completa;
+                    Atendimento as normas SBC;
+                    Redação clara e inteligível com correção gramatical;
+                    Introdução objetiva e precisa;
+                    Conclusão crítica.</li>                  
+                  </ul>
+            </td>
+            <td style="text-align: center;">{{ object.dic_pesos.merito_redacao_responsavel_suplente }}</td>
+        </tr>
+        <tr>
+            <td>
+                APRESENTAÇÃO:
+                <ul>
+                    <li>Domínio do Assunto;
+                    Organização do Conteúdo;
+                    Distribuição adequada do tempo.</li>
+                  </ul>
+            </td>
+            <td style="text-align: center;">{{ object.dic_pesos.merito_apresentacao_responsavel_suplente }}</td>
+        </tr>
+    </tbody>
+</table>
+<hr>
+<table>
+    <thead>
+        <tr>
+            <td><h3>PARECER</h3></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            {% if object.rebanca == 'SIM' %}
+                <td style="text-justify: newspaper;">
+                    {{ object.parecer_reavaliacao_avaliador_responsavel|linebreaks }}
+                </td>
+            {% else %}
+                <td style="text-justify: newspaper;">
+                    {{ object.parecer_avaliador_responsavel|linebreaks }}
+                </td>
+            {% endif %}
+        </tr>
+        {% if object.arquivo_corrigido_responsavel %}
+            <tr>
+                <td>
+                    <br><br>O avaliador disponibilizou arquivo .pdf do TCC com sugestões/correções ao aluno.
+                </td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+<hr>
+<table>
+    <thead>
+        <tr>
+            <td><h3>NOTA</h3></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                {{ object.nota_final_responsavel }} - 
+                {% if object.nota_final_responsavel >= 7 %}
+                    APROVADO
+                {% else %}
+                    REPROVADO
+                {% endif%}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <hr>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">
+                <br><br>
+                {{ object.avaliador_responsavel.nome}}
+                <br>
+                <br>
+                Data da emissão do parecer: 
+                {% if object.dt_avaliacao_responsavel %}
+                    {{ object.dt_avaliacao_responsavel }}
+                {% else %}
+                    Parecer digitado pelo Coordenador de TCC
+                {% endif %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<p style="text-align: justify;">
+    O arquivo para impressão do parecer é gerado automaticamente pelo Sistema TFGOnline, no momento em que 
+    todos os professores avaliadores enviam suas notas e seus comentários sobre o trabalho disponibilizado à avaliação.
+</p>
+
+
+<!-- AVALIADOR 2 -->
+<div>
+    <pdf:nextpage />
+</div>
+<hr>
+<h3>Nome do avaliador 2: {{ object.avaliador_suplente.nome }}</h3>
+<hr>
+<table>
+    <thead>
+        <tr>
+            <td><h3>CRITÉRIOS AVALIADOS</h3></td>
+            <td style="text-align: center;"><h3>PESO</h3></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                DESENVOLVIMENTO:
+                <ul>
+                    <li>Adequação entre teoria, método e objetivos; Atualização e adequação da bibliografia selecionada; Domínio do referencial teórico e bibliográfico;
+                        Análise crítica do problema e da solução; Contribuição pessoal; 
+                        Contribuição para a área de conhecimento (aplicabilidade e/ou<br>características inovadoras);
+                        Consistência com a proposta apresentada.</li>
+                  </ul>
+            </td>
+            <td style="text-align: center;">{{ object.dic_pesos.merito_desenvolvimento_responsavel_suplente }}</td>
+        </tr>
+        <tr>
+            <td>
+                REDAÇÃO:
+                <ul>
+                    <li>Organização do trabalho; Coerência interna e progressão lógico-semântica;
+                    Bibliografia adequada e completa;
+                    Atendimento as normas SBC;
+                    Redação clara e inteligível com correção gramatical;
+                    Introdução objetiva e precisa;
+                    Conclusão crítica.</li>                  
+                  </ul>
+            </td>
+            <td style="text-align: center;">{{ object.dic_pesos.merito_redacao_responsavel_suplente }}</td>
+        </tr>
+        <tr>
+            <td>
+                APRESENTAÇÃO:
+                <ul>
+                    <li>Domínio do Assunto;
+                    Organização do Conteúdo;
+                    Distribuição adequada do tempo.</li>
+                  </ul>
+            </td>
+            <td style="text-align: center;">{{ object.dic_pesos.merito_apresentacao_responsavel_suplente }}</td>
+        </tr>
+    </tbody>
+</table>
+<hr>
+<table>
+    <thead>
+        <tr>
+            <td><h3>PARECER</h3></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            {% if object.rebanca == 'SIM' %}
+                <td style="text-justify: newspaper;">
+                    {{ object.parecer_reavaliacao_avaliador_suplente|linebreaks }}
+                </td>
+            {% else %}
+                <td style="text-justify: newspaper;">
+                    {{ object.parecer_avaliador_suplente|linebreaks }}
+                </td>
+            {% endif %}
+        </tr>
+        {% if object.arquivo_corrigido_suplente %}
+            <tr>
+                <td>
+                    <br><br>O avaliador disponibilizou arquivo .pdf do TCC com sugestões/correções ao aluno.
+                </td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+<hr>
+<table>
+    <thead>
+        <tr>
+            <td><h3>NOTA</h3></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                {{ object.nota_final_suplente }} - 
+                {% if object.nota_final_suplente >= 7 %}
+                    APROVADO
+                {% else %}
+                    REPROVADO
+                {% endif%}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <hr>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">
+                <br><br>
+                {{ object.avaliador_suplente.nome}}
+                <br>
+                <br>
+                Data da emissão do parecer: 
+                {% if object.dt_avaliacao_suplente %}
+                    {{ object.dt_avaliacao_suplente }}
+                {% else %}
+                    Parecer digitado pelo Coordenador de TCC e concordado pelo Avaliador
+                {% endif %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<p style="text-align: justify;">
+    O arquivo para impressão do parecer é gerado automaticamente pelo Sistema TFGOnline, no momento em que 
+    todos os professores avaliadores enviam suas notas e seus comentários sobre o trabalho disponibilizado à avaliação.
+</p>
+
+
+<!-- AVALIADOR CONVIDADO -->
+{% if object.avaliador_convidado%}
+    <div>
+        <pdf:nextpage />
+    </div>
+    <hr>
+    <h3>Nome do avaliador convidado: {{ object.avaliador_convidado.nome }}</h3>
+    <hr>
+    <table>
+        <thead>
+            <tr>
+                <td><h3>CRITÉRIOS AVALIADOS</h3></td>
+                <td style="text-align: center;"><h3>PESO</h3></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    DESENVOLVIMENTO:
+                    <ul>
+                        <li>Adequação entre teoria, método e objetivos; Atualização e adequação da bibliografia selecionada; Domínio do referencial teórico e bibliográfico;
+                            Análise crítica do problema e da solução; Contribuição pessoal; 
+                            Contribuição para a área de conhecimento (aplicabilidade e/ou<br>características inovadoras);
+                            Consistência com a proposta apresentada.</li>
+                    </ul>
+                </td>
+                <td style="text-align: center;">{{ object.dic_pesos.merito_desenvolvimento_responsavel_suplente }}</td>
+            </tr>
+            <tr>
+                <td>
+                    REDAÇÃO:
+                    <ul>
+                        <li>Organização do trabalho; Coerência interna e progressão lógico-semântica;
+                        Bibliografia adequada e completa;
+                        Atendimento as normas SBC;
+                        Redação clara e inteligível com correção gramatical;
+                        Introdução objetiva e precisa;
+                        Conclusão crítica.</li>                  
+                    </ul>
+                </td>
+                <td style="text-align: center;">{{ object.dic_pesos.merito_redacao_responsavel_suplente }}</td>
+            </tr>
+            <tr>
+                <td>
+                    APRESENTAÇÃO:
+                    <ul>
+                        <li>Domínio do Assunto;
+                        Organização do Conteúdo;
+                        Distribuição adequada do tempo.</li>
+                    </ul>
+                </td>
+                <td style="text-align: center;">{{ object.dic_pesos.merito_apresentacao_responsavel_suplente }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <table>
+        <thead>
+            <tr>
+                <td><h3>PARECER</h3></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% if object.rebanca == 'SIM' %}
+                    <td style="text-justify: newspaper;">
+                        {{ object.parecer_reavaliacao_avaliador_convidado|linebreaks }}
+                    </td>
+                {% else %}
+                    <td style="text-justify: newspaper;">
+                        {{ object.parecer_avaliador_convidado|linebreaks }}
+                    </td>
+                {% endif %}
+            </tr>
+            {% if object.arquivo_corrigido_convidado %}
+                <tr>
+                    <td>
+                        <br><br>O avaliador disponibilizou arquivo .pdf do TCC com sugestões/correções ao aluno.
+                    </td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    <hr>
+    <table>
+        <thead>
+            <tr>
+                <td><h3>NOTA</h3></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    {{ object.nota_final_convidado }} - 
+                    {% if object.nota_final_convidado >= 7 %}
+                        APROVADO
+                    {% else %}
+                        REPROVADO
+                    {% endif%}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <hr>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">
+                    <br><br>
+                    {{ object.avaliador_convidado.nome}}
+                    <br>
+                    <br>
+                    Data da emissão do parecer: 
+                    {% if object.dt_avaliacao_convidado %}
+                        {{ object.dt_avaliacao_convidado }}
+                    {% else %}
+                        Parecer digitado pelo Coordenador de TCC
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <p style="text-align: justify;">
+        O arquivo para impressão do parecer é gerado automaticamente pelo Sistema TFGOnline, no momento em que 
+        todos os professores avaliadores enviam suas notas e seus comentários sobre o trabalho disponibilizado à avaliação.
+    </p>
+
+{% endif %}
+
+{% endblock %}

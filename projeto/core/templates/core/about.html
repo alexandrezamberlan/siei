@@ -1,0 +1,12 @@
+{% extends 'core/base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block title %}
+	{% bootstrap_icon 'question-sign' %} Sobre
+{% endblock %}
+
+
+{% block content %}
+	{% include 'core/textoAbout.html' %}
+{% endblock %}

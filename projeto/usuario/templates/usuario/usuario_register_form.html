@@ -1,0 +1,80 @@
+{% extends "usuario/usuario_register_base.html" %}
+{% load bootstrap3 %}
+
+{% load widget_tweaks %}
+
+{% block actions %} 
+{% endblock %}
+
+{% block title %}
+	Auto cadastro de usuário | Participante
+{% endblock %}
+
+{% block content %}
+<script>
+  function autocadastrar(){
+      $("#btnCadastrar").html('Aguarde...').attr('disabled', true);
+      $("#formAutocadastro").submit();
+  }
+</script>
+
+<form id="formAutocadastro" class="form" role="form" method="POST">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+  
+  {% bootstrap_field form.tipo %}
+  {% bootstrap_field form.nome %}  
+  {% bootstrap_field form.instituicao %}
+  {% bootstrap_field form.email %}
+  {% bootstrap_field form.celular %} 
+  {% bootstrap_field form.cpf|add_class:'mask_cpf' %}
+  {% bootstrap_field form.password %}
+  <hr>
+  <h3>Termo de Consentimento</h3>
+
+  <h4>1. Introdução</h4>
+
+Bem-vindo a plataforma SIEI | IFFar Santo Augusto! Para garantir a segurança e a privacidade dos seus dados, é necessário que você leia e aceite os termos e condições descritos neste documento antes de proceder com o seu cadastro.
+
+<h4>2. Coleta e Uso de Dados</h4>
+
+Ao se cadastrar na plataforma SIEI | IFFar Santo Augusto, você concorda em fornecer informações pessoais, tais como nome, endereço de e-mail, telefone e outros dados relevantes. Estes dados serão utilizados exclusivamente para:
+
+- Gerenciamento do seu perfil de usuário.
+- Fornecimento de serviços e suporte técnico.
+- Envio de comunicações e atualizações relacionadas ao sistema.
+
+<h4>3. Armazenamento e Proteção de Dados</h4>
+
+Seus dados serão armazenados de forma segura em nossos servidores e somente serão acessados por pessoal autorizado. Adotamos medidas técnicas e organizacionais para proteger suas informações contra acessos não autorizados, perdas ou alterações.
+
+<h4>4. Compartilhamento de Dados</h4>
+
+Nós não compartilhamos, vendemos ou alugamos suas informações pessoais a terceiros sem o seu consentimento, exceto quando exigido por lei ou para proteger nossos direitos legais.
+
+<h4>5. Direitos do Usuário</h4>
+
+Você tem o direito de acessar, corrigir, atualizar ou solicitar a exclusão de suas informações pessoais a qualquer momento. Para isso, basta entrar em contato com nosso suporte.
+
+<h4>6. Aceitação dos Termos</h4>
+
+Ao clicar em "Aceito" ou similar, você confirma que leu, entendeu e concorda com os termos e condições descritos neste documento.
+
+<h4>7. Alterações no Termo de Consentimento</h4>
+
+Nos reservamos o direito de modificar este termo de consentimento a qualquer momento. Notificaremos os usuários sobre quaisquer alterações através do sistema ou por e-mail.
+
+<h4>8. Contato</h4>
+
+Se você tiver qualquer dúvida ou preocupação sobre este termo de consentimento, entre em contato conosco através do e-mail [lapinf@ufn.edu.br].<br><br>
+
+
+Ao prosseguir com o cadastro, você estará concordando com os termos acima e autorizando o uso de suas informações conforme descrito.
+
+  {% bootstrap_field form.aceita_termo %}
+  <hr>
+  <button id="btnCadastrar" type="button" class="btn btn-default" onclick="autocadastrar();">Gravar</button>
+  <a href="javascript:history.go(-1);" class="btn btn-warning" role="button">Voltar</a>
+  
+</form>
+{% endblock %}

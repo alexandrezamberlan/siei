@@ -1,0 +1,18 @@
+{% extends "mail_templated/base.tpl" %}
+{% load bootstrap3 %}
+
+{% block subject %}
+    {{ usuario.nome }} valide seu cadastro no SIEI | IFFar Santo Augusto!
+{% endblock %}
+
+{% block html %}
+    <br>
+    <h2>Bem-vindo(a) ao SIEI | IFFar Santo Augusto. Processo de validação de cadastro!</h2>
+    <p>{{ usuario.nome }}, antes de utilizar a plataforma <strong>SIEI | IFFar Santo Augusto</strong> você precisa habilitar a sua conta.</p>
+    <p>Clique <a href='{{ usuario.get_usuario_register_activate_url }}'>aqui</a> para prosseguir.</a> </p>
+    <br>
+    <p>***** MENSAGEM GERADA AUTOMATICAMENTE. NÃO RESPONDA. *****</p>
+    <br>
+    <hr>
+    <p><small>Desenvolvido pelo Laboratório de Práticas da Computação UFN.</small></p>
+{% endblock %}

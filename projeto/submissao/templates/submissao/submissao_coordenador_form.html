@@ -1,0 +1,46 @@
+{% extends 'core/base.html' %}
+{% load bootstrap3 %}
+
+{% block actions %}
+{% endblock %}
+
+{% block title %}
+	{% bootstrap_icon 'glass' %} Cadastro de artigo em evento
+{% endblock %}
+
+{% block content %}
+<form class="form" role="form" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    {% for error in form.non_field_errors %}
+      {% bootstrap_alert error 'danger' %}
+    {% endfor %}
+    
+    {% comment %} {% bootstrap_form form %} {% endcomment %}
+    {% comment %} fields = ['evento', 'titulo', 'resumo' , 'abstract', 'palavras_chave', 'arquivo_sem_autores', 'arquivo_final', 
+                  'arquivo_comite_etica', 'observacoes']
+     {% endcomment %}
+    {% bootstrap_field form.evento %}
+    {% bootstrap_field form.titulo %}
+    {% bootstrap_field form.resumo %}
+    {% bootstrap_field form.abstract %}
+    {% bootstrap_field form.palavras_chave %}
+    
+    <hr>
+    {% if not object or object.status == 'EM EDICAO' %}
+      <h3>Primeira versão do artigo. SEM autores E/OU identificação.</h3>
+      {% bootstrap_field form.arquivo_sem_autores %}
+      {% bootstrap_field form.arquivo_comite_etica %}    
+      {% bootstrap_field form.observacoes %}
+    {% endif %}
+    
+    {% if object.status == 'APROVADO' %}
+      <h3>Arquivo final do artigo!</h3>
+      {% bootstrap_field form.arquivo_final %}
+    {% endif %}
+
+    {% buttons submit='Gravar' %}
+       <a href="javascript:history.go(-1);" class="btn btn-warning" role="button">Voltar</a>
+    {% endbuttons %}
+</form>
+{% endblock %}

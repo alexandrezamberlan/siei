@@ -1,0 +1,181 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load bootstrap3 %}
+
+{% block actions %}
+{% endblock %}
+
+{% block title %}
+	{% bootstrap_icon 'check' %} Minha avaliação
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'avaliacao/js/avaliacao-22102024.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="panel panel-default">
+  <div class="panel-body">
+    <h4>
+        <small><b>Submissão a ser avaliada:</b></small> {{ object.submissao.id }} | {{ object.submissao.titulo }}<br><br>
+    </h4> 
+    <table class="table table-condensed table-responsive">
+      <tr>
+        <td>
+          <b>Artigo</b><br><br>
+          {% if  object.submissao.arquivo_sem_autores %}
+            <a href="{{ object.submissao.arquivo_sem_autores.url }}" target="_blank" class="btn btn-sm btn-success">
+              {% bootstrap_icon 'download' %}
+            </a>
+          {% else %}
+            <a href="" target="_blank" class="btn btn-sm btn-warning disabled">
+              {% bootstrap_icon 'download' %}
+            </a>
+          {% endif %}
+        </td>
+        <td>
+          <b>Comitê de Ética</b><br><br>
+          {% if  object.submissao.arquivo_comite_etica %}
+            <a href="{{ object.submissao.arquivo_comite_etica.url }}" target="_blank" class="btn btn-sm btn-success">
+              {% bootstrap_icon 'download' %}
+            </a>
+          {% else %}
+            <a href="" target="_blank" class="btn btn-sm btn-warning disabled">
+              {% bootstrap_icon 'download' %}
+            </a>
+          {% endif %}
+        </td>
+        <td>
+          <b>Palavras-chave</b><br><br>
+          {{ object.submissao.palavras_chave }}
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<form class="form" role="form" method="POST" enctype="multipart/form-data" name="form_avaliacao_responsavel"> 
+  {% csrf_token %}
+  {{ form.non_field_errors }} 
+  <!-- avaliador responsavel -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        Avaliador: {{ object.avaliador_responsavel.nome }} <br><br>
+        Status do parecer: 
+        {% if object.dt_avaliacao_responsavel %}
+          <span class="label label-success">
+            Parecer enviado em: {{ object.dt_avaliacao_responsavel|date:"d/m/Y H:i" }} 
+          </span>
+        {% else %}
+          <span class="label label-warning">
+            Avaliação não finalizada
+          </span>
+        {% endif %}
+      </h3>
+    </div>
+    <div class="panel-body">
+      <table class="table table-condensed table-responsive">
+        <thead>
+          <tr>
+            <th>Critérios de Avaliação | <span class="label label-info">Nota 1 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.<span></th>
+            <th>Avaliação<br> (1 a 5)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              {{ form.merito_relevancia_responsavel.label|upper }}
+            </td>              
+            <td>
+              {{ form.merito_relevancia_responsavel }}
+              <div class="text-danger">{{ form.merito_relevancia_responsavel.errors }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{ form.merito_contribuicao_responsavel.label|upper }}
+            </td>
+            <td>
+              {{ form.merito_contribuicao_responsavel }}
+              <div class="text-danger">{{ form.merito_contribuicao_responsavel.errors }}</div>
+          </tr>
+          <tr>
+            <td>
+              {{ form.merito_metodologia_responsavel.label|upper }}
+            </td>
+            <td>
+              {{ form.merito_metodologia_responsavel }} 
+              <div class="text-danger">{{ form.merito_metodologia_responsavel.errors }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{ form.merito_fundamentacao_responsavel.label|upper }}
+            </td>
+            <td>
+              {{ form.merito_fundamentacao_responsavel }} 
+              <div class="text-danger">{{ form.merito_fundamentacao_responsavel.errors }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{ form.merito_clareza_responsavel.label|upper }}
+            </td>
+            <td>
+              {{ form.merito_clareza_responsavel }} 
+              <div class="text-danger">{{ form.merito_clareza_responsavel.errors }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{ form.merito_referencias_responsavel.label|upper }}
+            </td>
+            <td>
+              {{ form.merito_referencias_responsavel }} 
+              <div class="text-danger">{{ form.merito_referencias_responsavel.errors }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{ form.merito_resultados_responsavel.label|upper }}
+            </td>
+            <td>
+              {{ form.merito_resultados_responsavel }} 
+              <div class="text-danger">{{ form.merito_resultados_responsavel.errors }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{ form.merito_conclusao_responsavel.label|upper }}
+            </td>
+            <td>
+              {{ form.merito_conclusao_responsavel }} 
+              <div class="text-danger">{{ form.merito_conclusao_responsavel.errors }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>MÉDIA FINAL</b>
+            </td>
+            <td>  
+              <b>
+                <input class="form-control" id="id_nota_final_responsavel" readonly>
+              </b>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      {% bootstrap_field form.parecer_avaliador_responsavel %}
+      {% if object.rebanca == 'SIM'%}
+        <h3><span class="label label-warning">Rebanca</span></h3>
+        {% bootstrap_field form.parecer_reavaliacao_avaliador_responsavel %}
+      {% endif %}
+      {% bootstrap_field form.arquivo_corrigido_responsavel %}
+    </div>
+  </div>   
+  {% buttons submit='Gravar' %}
+    <a href="javascript:history.go(-1);" class="btn btn-warning" role="button">Voltar</a>
+  {% endbuttons %}
+</form>
+{% endblock %}

@@ -1,0 +1,166 @@
+{% extends 'core/base.html' %}
+{% load bootstrap3 %}
+
+{% block title %}
+	{% bootstrap_icon 'check' %} Avaliações <span class="label label-info">TODAS</span>
+{% endblock %}
+
+
+{% block content %}
+<div class="panel panel-default">
+	<div class="panel-body">
+	  <form class="form">
+		  <div class="row">
+			  <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+				  {% bootstrap_field form.autor  %}
+			  </div>
+			  <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+				  {% bootstrap_field form.evento  %}
+			  </div>
+			  <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+				{% bootstrap_field form.nome_avaliador %}
+			  </div>
+			  <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+				  <br>
+				  <button type="submit" class="btn btn-success btn-lg"  style="width: 100%;">{% bootstrap_icon 'search' %} Buscar</button>
+			  </div>
+		  </div>
+	  </form>
+	</div>
+  </div>
+	<div class="table-responsive">
+		<table class="table table-hover">
+	  		<thead>
+				<th>Evento</th>
+				<th>Submissão</th>
+				<th>{% bootstrap_icon 'option-vertical' %}</th>
+				<th class="text-center">Situação</th>
+				<th class="text-center">Média</th>
+				<th>{% bootstrap_icon 'option-vertical' %}</th>
+				<th>Avaliador_1</th>
+				<th>Avaliador_2</th>
+				
+				{% comment %} <th>Avaliador_3</th> {% endcomment %}
+
+				<th class="text-center">Parecer liberado?</th>
+	  			<th class="text-center">Gerenciar</th>
+	  			<th class="text-center">Excluir</th>
+	  		</thead>
+	  		<tbody>
+	  			{% for avaliacao in object_list %}
+					<tr>
+						<td>
+							{% if avaliacao.submissao.evento %}
+								{{ avaliacao.submissao.evento }}
+							{% endif %}
+                        </td>
+						<td>
+							{% if avaliacao.submissao %}
+								{{ avaliacao.submissao }}
+							{% endif %}
+						</td>
+						<td>{% bootstrap_icon 'option-vertical' %}</td>
+						<td class="text-center">{{ avaliacao.submissao.get_status_display|upper }}</td>
+						<td class="text-center">
+							{% if avaliacao.media_final_avaliacao %}
+								<span class="label label-info">
+									{{ avaliacao.media_final_avaliacao|floatformat:1}}
+								</span>
+							{% else %}
+								<span class="label label-warning">
+									Sem notas
+								</span>
+							{% endif %}
+						</td>	
+						<td>{% bootstrap_icon 'option-vertical' %}</td>
+						<td>
+							{% if avaliacao.avaliador_responsavel %}
+								<small>{{ avaliacao.avaliador_responsavel.nome }}</small><br>
+								{% if avaliacao.parecer_avaliador_responsavel %}
+									<span class="label label-success">
+										{{ avaliacao.dt_avaliacao_responsavel|date:'d/m/Y' }}
+									</span><br>
+									<span class="label label-info">
+										Nota: {{ avaliacao.nota_final_responsavel }}
+									</span>
+								{% else %}
+									<span class="label label-warning">
+										Não finalizado
+									</span>
+								{% endif %}
+							{% endif %}
+						</td>
+						<td>
+							{% if avaliacao.avaliador_suplente %}
+								<small>{{ avaliacao.avaliador_suplente.nome }}</small><br>
+								{% if avaliacao.parecer_avaliador_suplente %}
+									<span class="label label-success">
+										{{ avaliacao.dt_avaliacao_suplente|date:'d/m/Y' }}
+									</span><br>
+									<span class="label label-info">
+										Nota: {{ avaliacao.nota_final_suplente }}
+									</span>
+								{% else %}
+									<span class="label label-warning">
+										Não finalizado
+									</span>
+								{% endif %}							
+							{% endif %}
+						</td>
+						
+						{% comment %} <td>	
+							{% if avaliacao.avaliador_convidado %}
+								<small>{{ avaliacao.avaliador_convidado.nome }}</small><br>
+								{% if avaliacao.nota_final_convidado %}
+									<span class="label label-success">
+										{{ avaliacao.dt_avaliacao_convidado|date:'d/m/Y' }}
+									</span><br>
+									<span class="label label-info">
+										Nota: {{ avaliacao.nota_final_convidado }}
+									</span>
+								{% else %}
+									<span class="label label-warning">
+										Não finalizado
+									</span>
+								{% endif %}							
+							{% else %}
+								<span class="label label-warning">
+									Não atribuído
+								</span>
+							{% endif %}
+						</td> {% endcomment %}
+						<td class="text-center">
+							{{ avaliacao.parecer_liberado }}
+							{% comment %} {% if avaliacao.parecer_liberado == 'SIM' %}
+								<span data-toggle="tooltip"  title='Parecer liberado'>
+									<a href="{{ avaliacao.get_parecer_liberado_url }}" class="btn btn-sm btn-success">
+										{% bootstrap_icon 'download' %}
+									</a>
+								</span>
+							{% else %}
+								<span class="label label-primary">
+									NÃO
+								</span>
+							{% endif %}	 {% endcomment %}
+						</td>
+						<td class="text-center">
+							<span data-toggle="tooltip"  title='Gerenciar avaliação'>
+					        	{% bootstrap_button content='' href=avaliacao.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
+							</span>
+						</td>
+					    <td class="text-center">
+							<span data-toggle="tooltip"  title='Excluir avaliação'>
+					        	{% bootstrap_button content='' href=avaliacao.get_delete_url button_type='link' icon='trash' button_class='btn btn-danger' size='sm' %}
+							</span>
+						</td>
+					</tr>
+				{% endfor %}
+	  		</tbody>
+			<tfoot>
+				<th colspan="12">
+					Total de registros: {{ object_list|length }}
+				</th>
+			</tfoot>
+		</table>
+	</div>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends 'core/impressoes/base.html' %}
+
+{% block content %}
+<h1 style="text-align: center;">AUTORIZAÇÃO PARA LIBERAÇÃO ON-LINE DE TRABALHOS DE CONCLUSÃO DOS CURSOS DE GRADUAÇÃO:</h1>
+
+<h2 style="text-align: center;">
+    ( ) Monografia   &nbsp; &nbsp; &nbsp; ( X ) Artigo
+</h2>
+<br>
+<br>
+{% if object.submissao.termo_biblioteca == 'Não Autorizo Liberação'%}
+    <p style="text-align: justify;">
+        Eu, <b>{{ object.submissao.aluno.nome }}</b>, nacionalidade brasileira, CPF nº <b>{{ object.submissao.aluno.cpf }}</b>, 
+        aluno do Curso em <b>{{ object.submissao.aluno.curso }}</b>, NÃO AUTORIZO a Universidade Franciscana – UFN, 
+        a disponibilizar online meu trabalho final intitulado <b>{% if object.submissao.titulo %} {{ object.submissao.titulo }} {% else %} Não informado pelo aluno {% endif %}</b>. 
+    </p>
+{% else %}
+    <p style="text-align: justify;">
+        Eu, <b>{{ object.submissao.aluno.nome }}</b>, nacionalidade brasileira, CPF nº <b>{{ object.submissao.aluno.cpf }}</b>, 
+        aluno do Curso em <b>{{ object.submissao.aluno.curso }}</b>, AUTORIZO a Universidade Franciscana – UFN, 
+        a disponibilizar online meu trabalho final intitulado <b>{% if object.submissao.titulo %} {{ object.submissao.titulo }} {% else %} Não informado pelo aluno {% endif %}</b>,
+        podendo também ser acessado mundialmente na Web, sem qualquer ônus para a UFN. 
+    </p>
+    <br>
+    <h2> Especificações para liberação do documento on-line: </h2>
+    <ul>
+        <li>{{ object.submissao.termo_biblioteca }}</li>
+    </ul>
+    <p style="text-align: justify;">
+        Em caso de liberação parcial, logo após a publicação dos dados da pesquisa, o aluno deverá comunicar à Biblioteca para que esta faça a liberação integral 
+        do texto no Repositório de Trabalhos de Conclusão de Curso. 
+    </p>
+{% endif %}
+
+<h2>Dados complementares obrigatórios:</h2>
+
+<p>    
+E-mail do autor: {{ object.submissao.aluno.email }}<br>
+Nome do orientador: {{ object.submissao.orientador.nome }} <br>
+Participante da banca: {{ object.submissao.avaliacao.avaliador_responsavel.nome }} <br>
+Participante da banca: {{ object.submissao.avaliacao.avaliador_suplente.nome }} <br>
+</p>
+<br>
+<br>                                                                                                                                                         
+
+<p style="text-align: center;">
+    Santa Maria, {% if object.submissao.dt_aceite_termo_biblioteca%} {{ object.submissao.dt_aceite_termo_biblioteca}} 
+                 {% else %} {{ object.submissao.turma.data_entrega_tfg_para_banca }}
+                 {% endif %}
+</p>
+<br>
+<br>
+<h3 style="text-align: center;">
+    Autor <br>
+    {{ object.submissao.aluno.nome }}
+</h3>
+<p style="text-align: justify;">
+    O termo de autorização para publicação é gerado automaticamente pelo Sistema TFGOnline, no momento em que o 
+    aluno entrega o arquivo com o texto de TCC com a versão final e concorda com a publicação junto à Biblioteca da Instituição.
+</p>
+
+<div>
+    <pdf:nextpage />
+</div>
+<br>
+<br>
+<br>
+
+<h1 style="text-align: center;"> DECLARAÇÃO</h1>
+<br>
+<br>
+
+<p style="text-align: justify;">
+    Declaro que o(s) trabalho(s) autorizado(s) para liberação on-line não infringe(m) os dispositivos da 
+    Lei n º 9.610/98 – Lei de Direitos Autorais, nem o direito autoral de qualquer editora.
+</p>
+
+<br>
+<br>
+
+
+
+<p style="text-align: center;">
+    Santa Maria, {% if object.submissao.dt_aceite_termo_biblioteca%} {{ object.submissao.dt_aceite_termo_biblioteca}} 
+                 {% else %} {{ object.submissao.turma.data_entrega_tfg_para_banca }}
+                 {% endif %}
+</p>
+<br>
+
+<h3 style="text-align: center;">
+    Autor <br>
+    {{ object.submissao.aluno.nome }}
+</h3>
+<br>
+<p style="text-align: justify;">
+    O termo de autorização para publicação é gerado automaticamente pelo Sistema TFGOnline, no momento em que o 
+    aluno entrega o arquivo com o texto de TCC com a versão final e concorda com a publicação junto à Biblioteca da Instituição.
+</p>
+
+
+{% endblock %}

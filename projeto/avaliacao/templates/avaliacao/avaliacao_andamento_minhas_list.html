@@ -1,0 +1,196 @@
+{% extends 'core/base.html' %}
+{% load bootstrap3 %}
+
+{% block title %}
+	{% bootstrap_icon 'check' %} Avaliações Coordenador <span class="label label-info">EM ANDAMENTO</span> 
+{% endblock %}
+
+
+{% block content %}
+<div class="panel panel-default">
+	<div class="panel-body">
+	  <form class="form">
+		  <div class="row">
+			  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2">
+				  {% bootstrap_field form.nome_aluno  %}
+			  </div>
+			  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2">
+				  {% bootstrap_field form.curso  %}
+			  </div>
+			  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2">
+				{% bootstrap_field form.turma  %}
+			  </div>
+			  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2">
+				{% bootstrap_field form.nome_orientador %}
+			  </div>
+			  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2">
+				{% bootstrap_field form.nome_avaliador %}
+			  </div>
+			  <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+				  <br>
+				  <button type="submit" class="btn btn-success btn-lg"  style="width: 100%;">{% bootstrap_icon 'search' %} Buscar</button>
+			  </div>
+		  </div>
+	  </form>
+	</div>
+  </div>
+	<div class="table-responsive">
+		<table class="table table-hover">
+	  		<thead>
+				<th>Submissão</th>
+				<th>{% bootstrap_icon 'option-vertical' %}</th>
+				<th class="text-center">Situação</th>
+				<th class="text-center">Apto</th>
+				<th class="text-center">Rebanca</th>
+				<th>{% bootstrap_icon 'option-vertical' %}</th>
+				<th>Média</th>
+				<th>Orientador</th>
+				<th>Data avaliação</th>
+				<th>Avaliador1</th>
+				<th>Data avaliação</th>
+				<th>Avaliador2</th>
+				<th>Data avaliação</th>
+				<th>Avaliador Convidado?</th>
+				<th class="text-center">Parecer Liberado?</th>
+	  			<th class="text-center">Avaliar</th>
+	  		</thead>
+	  		<tbody>
+				{% for avaliacao in object_list %}
+					<tr>
+						<td>
+							{% if avaliacao.submissao %}
+								{{ avaliacao.submissao }}
+							{% endif %}
+						</td>
+						<td>{% bootstrap_icon 'option-vertical' %}</td>
+						<td class="text-center">{{ avaliacao.submissao.status }}</td>
+						
+						<td class="text-center">
+							<span data-toggle="tooltip"  title='Orientador o julgou apto?'>
+								{% if avaliacao.apto == 'NÃO'%}
+									<span class="label label-danger">{{ avaliacao.apto }}</span>
+								{% else %}
+									<span class="label label-info">{{ avaliacao.apto }}</span>
+								{% endif %}
+							</span>
+						</td>
+						<td class="text-center">
+							<span data-toggle="tooltip"  title='Aluno em rebanca?'>
+								{% if avaliacao.rebanca == 'SIM'%}
+									<span class="label label-danger">{{ avaliacao.rebanca }}</span>
+								{% else %}
+									<span class="label label-info">{{ avaliacao.rebanca }}</span>
+								{% endif %}
+							</span>
+						</td>
+						<td>{% bootstrap_icon 'option-vertical' %}</td>
+						<td>
+							{% if avaliacao.get_media_atualizada %}
+								{{ avaliacao.get_media_atualizada|floatformat:1}}
+							{% else %}
+								<span class="label label-warning">
+									Sem
+								</span>
+							{% endif %}
+						</td>
+						<td>
+							{% if avaliacao.submissao.orientador %}
+								{{ avaliacao.submissao.orientador.nome }}
+							{% else %}
+								ATENÇÃO! Aluno sem orientador
+							{% endif %}
+						</td>
+						<td>							
+							{% if avaliacao.parecer_avaliador_orientador and avaliacao.nota_final_orientador %}
+								<span class="label label-success">
+									{{ avaliacao.dt_avaliacao_orientador|date:'d/m/Y' }}
+								</span>
+							{% else %}
+								<span class="label label-warning">
+									Não finalizado
+								</span>
+							{% endif %}
+						</td>
+						<td>
+							{% if avaliacao.avaliador_responsavel %}
+								{{ avaliacao.avaliador_responsavel.nome }}
+							{% endif %}
+						</td>
+						<td>							
+							{% if avaliacao.parecer_avaliador_responsavel and avaliacao.nota_final_responsavel %}
+								<span class="label label-success">
+									{{ avaliacao.dt_avaliacao_responsavel|date:'d/m/Y' }}
+								</span>
+							{% else %}
+								<span class="label label-warning">
+									Não finalizado
+								</span>
+							{% endif %}
+						</td>
+						<td>
+							{% if avaliacao.avaliador_suplente %}
+								{{ avaliacao.avaliador_suplente.nome }}
+							{% endif %}
+						</td>
+						<td>	
+							{% if avaliacao.parecer_avaliador_suplente and avaliacao.nota_final_suplente %}
+								<span class="label label-success">
+									{{ avaliacao.dt_avaliacao_suplente|date:'d/m/Y' }}
+								</span>
+							{% else %}
+								<span class="label label-warning">
+									Não finalizado
+								</span>
+							{% endif %}							
+						</td>
+						<td>
+							{% if avaliacao.avaliador_convidado  %}
+								<span class="label label-success">
+									SIM
+								</span>
+							{% else %}
+								<span class="label label-primary">
+									NÃO
+								</span>
+							{% endif %}	
+						</td>
+						<td class="text-center">
+							{% if avaliacao.parecer_liberado == 'SIM' %}
+								<span data-toggle="tooltip"  title='Parecer liberado'>
+									<a href="{{ avaliacao.get_parecer_liberado_url }}" class="btn btn-sm btn-success">
+										{% bootstrap_icon 'download' %}
+									</a>
+								</span>
+							{% else %}
+								<span class="label label-primary">
+									NÃO
+								</span>
+							{% endif %}	
+						</td>
+						<td class="text-center">
+							<span data-toggle="tooltip"  title='Realizar avaliação como membro da banca'>
+								
+
+								{% if user == avaliacao.submissao.orientador %}
+									{% bootstrap_button content='' href=avaliacao.get_avaliacao_coordenador_orientador_url button_type='link' icon='check' button_class='btn btn-primary' size='sm' %}
+								{% endif %}
+								{% if user == avaliacao.avaliador_responsavel %}
+									{% bootstrap_button content='' href=avaliacao.get_avaliacao_coordenador_responsavel_url button_type='link' icon='check' button_class='btn btn-primary' size='sm' %}
+								{% endif %}
+								{% if user == avaliacao.avaliador_suplente %}
+									{% bootstrap_button content='' href=avaliacao.get_avaliacao_coordenador_suplente_url button_type='link' icon='check' button_class='btn btn-primary' size='sm' %}
+								{% endif %}
+
+							</span>
+						</td>
+					</tr>
+				{% endfor %}
+	  		</tbody>
+			<tfoot>
+				<th>
+					Total de registros: {{ object_list|length }}
+				</th>
+			</tfoot>
+		</table>
+	</div>
+{% endblock %}

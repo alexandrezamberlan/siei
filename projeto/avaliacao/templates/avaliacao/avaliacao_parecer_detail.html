@@ -1,0 +1,87 @@
+{% extends 'core/base.html' %}
+{% load bootstrap3 %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+	{% include 'avaliacao/includes/_barra_botoes.html' %}
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<b>AVALIAÇÃO:</b> {{ object.submissao }}
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<b>Avaliador 1:</b> {{ object.avaliador_responsavel.nome }} | <b>Nota:</b> {{ object.nota_final_responsavel }}
+		</div>
+		<div class="panel-body">
+			<b>Parecer</b>
+			{{ object.parecer_avaliador_responsavel|linebreaks }}
+			<br>
+			<b>Arquivo corrigido do artigo</b><br>
+			<span  data-toggle="tooltip"  title='Arquivo Corrigido'>
+				{% if object.arquivo_corrigido_responsavel %}
+					<a href="{{ object.arquivo_corrigido_responsavel.url }}" target="_blank" class="btn btn-sm btn-success">
+						{% bootstrap_icon 'download' %}
+					</a>
+				{% else %}
+					<a href="" target="_blank" class="btn btn-sm btn-warning disabled">
+						{% bootstrap_icon 'download' %}
+					</a>
+				{% endif %}
+			</span>
+		</div>
+	</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<b>Avaliador 2:</b> {{ object.avaliador_suplente.nome }} | <b>Nota:</b> {{ object.nota_final_suplente }}
+		</div>
+		<div class="panel-body">
+			<b>Parecer</b>
+			{{ object.parecer_avaliador_suplente|linebreaks }}
+			<br>
+			<b>Arquivo corrigido do artigo</b><br>
+			<span  data-toggle="tooltip"  title='Arquivo Corrigido'>
+				{% if object.arquivo_corrigido_suplente %}
+					<a href="{{ object.arquivo_corrigido_suplente.url }}" target="_blank" class="btn btn-sm btn-success">
+						{% bootstrap_icon 'download' %}
+					</a>
+				{% else %}
+					<a href="" target="_blank" class="btn btn-sm btn-warning disabled">
+						{% bootstrap_icon 'download' %}
+					</a>
+				{% endif %}
+			</span>
+		</div>
+	</div>
+
+	{% if object.avaliador_convidado %}
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<b>Avaliador convidado:</b> {{ object.avaliador_convidado.nome }} | <b>Nota:</b> {{ object.nota_final_convidado }}
+			</div>
+			<div class="panel-body">
+				<b>Parecer</b>
+				{{ object.parecer_avaliador_convidado|linebreaks }}
+				<br>
+				<b>Arquivo corrigido do TCC</b><br>
+				<span  data-toggle="tooltip"  title='Arquivo Corrigido'>
+					{% if object.arquivo_anexo1 %}
+						<a href="{{ object.arquivo_corrigido_convidado.url }}" target="_blank" class="btn btn-sm btn-success">
+							{% bootstrap_icon 'download' %}
+						</a>
+					{% else %}
+						<a href="" target="_blank" class="btn btn-sm btn-warning disabled">
+							{% bootstrap_icon 'download' %}
+						</a>
+					{% endif %}
+				</span>
+			</div>
+		</div>
+	{% endif %}
+
+	{% include 'avaliacao/includes/_barra_botoes.html' %}
+{% endblock %}

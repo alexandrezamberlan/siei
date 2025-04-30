@@ -1,0 +1,129 @@
+{% extends 'core/base.html' %}
+{% load bootstrap3 %}
+
+{% block title %}
+	{% bootstrap_icon 'check' %} Pareceres e Termos <span class="label label-info">FINALIZADOS</span> 
+{% endblock %}
+
+
+{% block content %}
+<div class="panel panel-default">
+	<div class="panel-body">
+	  <form class="form">
+		  <div class="row">
+			  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2">
+				  {% bootstrap_field form.nome_aluno  %}
+			  </div>
+			  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2">
+				  {% bootstrap_field form.curso  %}
+			  </div>
+			  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2">
+				{% bootstrap_field form.turma  %}
+			  </div>
+			  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2">
+				{% bootstrap_field form.nome_orientador %}
+			  </div>
+			  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2">
+				{% bootstrap_field form.nome_avaliador %}
+			  </div>
+			  <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+				  <br>
+				  <button type="submit" class="btn btn-success btn-lg"  style="width: 100%;">{% bootstrap_icon 'search' %} Buscar</button>
+			  </div>
+		  </div>
+	  </form>
+	</div>
+  </div>
+
+	<div class="table-responsive">
+		<table class="table table-hover">
+	  		<thead>
+				<th>Submissão</th>
+				<th>Média</th>
+				<th>Orientador</th>
+				<th>Avaliador 1</th>
+				<th>Avaliador 2</th>
+				<th>Avaliador Convidado</th>
+				<th class="text-center">Requerimento Constituição Banca</th>
+				<th class="text-center">Pareceres Avaliadores</th>
+				<th class="text-center">Termo Biblioteca</th>
+	  		</thead>
+	  		<tbody>
+				{% for avaliacao in object_list %}
+					<tr>
+						<td>
+							{% if avaliacao.submissao %}
+								{{ avaliacao.submissao }}
+							{% endif %}
+						</td>
+						<td>
+							{% if avaliacao.get_media_atualizada %}
+								{{ avaliacao.get_media_atualizada|floatformat:1}}
+							{% else %}
+								<span class="label label-warning">
+									Sem
+								</span>
+							{% endif %}
+						</td>
+						<td>
+							{% if avaliacao.submissao.orientador %}
+								{{ avaliacao.submissao.orientador.nome }}
+							{% endif %}
+						</td>
+						<td>
+							{% if avaliacao.avaliador_responsavel %}
+								{{ avaliacao.avaliador_responsavel.nome }}
+							{% endif %}
+						</td>
+						<td>
+							{% if avaliacao.avaliador_suplente %}
+								{{ avaliacao.avaliador_suplente.nome }}
+							{% endif %}
+						</td>
+						<td>
+							{% if avaliacao.avaliador_convidado  %}
+								{{ avaliacao.avaliador_convidado.nome }}
+							{% else %}
+								<span class="label label-primary">
+									NÃO
+								</span>
+							{% endif %}	
+						</td>
+						<td class="text-center">
+							<span data-toggle="tooltip"  title='Requerimento Constituição de Banca'>
+							{% if  avaliacao.submissao.arquivo_texto_tfgbanca and avaliacao.submissao.termo_autoria == 'SIM'%}
+								<a href="{{ avaliacao.get_termo_banca_impressao_url }}" target="_blank" class="btn btn-md btn-primary">{% bootstrap_icon 'print' %} </a>	
+							{% else %}
+								<div class="btn btn-sm btn-warning">
+									{% bootstrap_icon 'thumbs-down' size='sm'%}
+								</div>
+							{% endif %}
+							</span>
+						</td>
+						<td class="text-center">
+							<span data-toggle="tooltip"  title='Parecer final'>
+								<a href="{{ avaliacao.get_parecer_impressao_url }}" target="_blank" class="btn btn-md btn-primary">{% bootstrap_icon 'print' %} </a>
+							</span>
+						</td>
+						<td class="text-center">
+							<span data-toggle="tooltip"  title='Termo Biblioteca'>
+							{% if  avaliacao.submissao.termo_biblioteca %}
+								<a href="{{ avaliacao.get_termo_biblioteca_impressao_url }}" target="_blank" class="btn btn-md btn-primary">{% bootstrap_icon 'print' %} </a>	
+							{% else %}
+								<div class="btn btn-sm btn-warning">
+									TCC1
+								</div>
+							{% endif %}
+							</span>
+						</td>
+					</tr>			
+				{% endfor %}
+	  		</tbody>
+			<tfoot>
+				<th>
+					Total de registros: {{ object_list|length }}
+				</th>
+			</tfoot>
+		</table>
+	</div>
+{% endblock %}

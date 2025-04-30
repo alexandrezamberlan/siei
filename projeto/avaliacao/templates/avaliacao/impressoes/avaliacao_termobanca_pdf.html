@@ -1,0 +1,71 @@
+{% extends 'core/impressoes/base.html' %}
+
+{% block content %}
+<h1 style="text-align: center;">REQUERIMENTO DE CONSTITUIÇÃO DE BANCA EXAMINADORA DE TCC</h1>
+
+<br>
+<br>
+<br>
+<br>
+
+<h2>Senhor Coordenador, </h2>
+<br>
+<p style="text-align: justify;">
+    Dirijo-me a Vossa Senhoria para requerer a constituição de banca examinadora 
+    para julgamento do Trabalho de Conclusão de Curso do aluno <b>{{ object.submissao.aluno.nome }}</b>,
+    do Curso de <b>{{ object.submissao.aluno.curso }}</b>, 
+    intitulado <b>{% if object.submissao.titulo %} {{ object.submissao.titulo }} {% else %} Não informado pelo aluno {% endif %}</b>.
+</p>
+<br>
+<br>
+<table>
+    <tr>
+        <td style="text-align: center;"> 
+            Orientador <br>
+            {{ object.submissao.orientador.nome }}
+        </td>
+        <td style="text-align: center;">
+            Aluno Orientado <br>
+            {{ object.submissao.aluno.nome }}
+        </td>
+    </tr>
+</table>
+<p style="text-align: center;">
+    Data da geração do Requerimento de Constituição da Banca de TCC: {{ object.submissao.dt_aceite_termo_autoria}}
+</p>
+<br>
+<p style="text-align: justify;">
+    O requerimento de constituição de banca é gerado automaticamente pelo Sistema TFGOnline, no momento em que o 
+    aluno entrega o arquivo com o texto de TCC com a versão para avaliação da banca examinadora e concorda com o termo de autoria. <br><br>
+</p>
+<hr>
+
+<h2>Designação da Banca (preenchida pelo Colegiado do Curso)</h2>
+<h3>Nome dos Participantes:</h3>
+1)<br>
+2)<br>
+3)<br>
+
+<br>
+<br>
+<br>
+<table>
+    <tr>
+        <td style="text-align: center;">
+            _______________________________<br>
+            Coordenador do Curso
+        </td>
+    </tr>
+</table>
+
+<br>
+<br>
+<br>
+<p>
+    Santa Maria, ______ de ________________________ de __________.
+</p>
+    
+</p>
+
+
+{% endblock %}

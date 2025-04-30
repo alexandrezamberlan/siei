@@ -1,6 +1,6 @@
 # Sistema de Informação para coleta de indicadores de atletas em esportes de invasão
 
-Sistema Web Python-Django que gerencia registros de indicadores de atletas.
+Sistema Web Python-Django que gerencia registros de indicadores de atletas - SIEI | IFFar Santo Augusto
 
 Este projeto faz parte do Laboratório de Práticas da Computação UFN, em que alunos dos cursos da área de Computação podem praticar o desenvolvimento de sistema Web Python-Django. Além disso, é uma parceria com o professor de Educação Física Fabrício Doring Martins do IFF de Santo Augusto - RS.
 

@@ -1,0 +1,24 @@
+{% extends "mail_templated/base.tpl" %}
+{% load bootstrap3 %}
+
+{% block subject %}
+    SIEI | IFFar Santo Augusto | Aviso: {{ aviso.titulo }}
+{% endblock %}
+
+{% block html %}
+    <p>
+        {{ aviso.texto|linebreaks }} 
+    </p>
+    <br>
+    <br>
+    <p>
+        Dúvidas, acesse o <a href="https://siei.lapinf.ufn.edu.br" target="_blank"> SIEI | IFFar Santo Augusto</a>
+    </p>
+    <br>
+    <p>***** MENSAGEM GERADA AUTOMATICAMENTE. NÃO RESPONDA. *****</p>
+    <hr>
+    <p><small>Desenvolvido pelo Laboratório de Práticas da Computação UFN - Direitos Reservados</small></p>
+{% endblock %}
+
+
+

@@ -1,0 +1,44 @@
+{% extends 'core/base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block title %}     
+      {% comment %} <img src="{% static 'core/img/logo.jpg' %}"
+      class="img-fluid" style="max-width: 220px;"> {% endcomment %}
+{% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+      <div class="container-fluid">
+            {% if request.user.tipo == 'COORDENADOR' %}
+                  <div class="row">
+                        <div class="col-md-12">
+                              <!-- Conteúdo da primeira coluna -->
+                              <div class="panel panel-default">
+                                    <div class="panel-heading"><b>Atenção coordenador <small class="badge badge-info">responsável ou suplente</small></b></div>
+                                    <div class="panel-body">
+                                          <b>Eventos sob SUA coordenação: <small class="badge badge-info">{{ request.user.total_eventos_coordenados }}</b></small><br>
+                                          <b>Submissões SEM avaliadores: <small class="badge badge-info">{{ request.user.total_submissoes_atencao }}</b></small><br>
+                                          <b>Submissões SEM versão final: <small class="badge badge-info">{{ request.user.total_submissoes_incompletas_atencao }}</b></small> <br>
+                                          <b>Avaliações PENDENTES: <small class="badge badge-info">{{ request.user.total_avaliacoes_atencao }}</b></small>
+                                    </div>
+                              </div>
+                        </div>
+                  </div>
+            {% endif %}       
+            <div class="row">
+                  <div class="col-md-12">
+                        <!-- Conteúdo da sexta coluna -->
+                        <div class="panel panel-default">
+                              <div class="panel-heading"><b>Avisos</b></div>
+                              <div class="panel-body">
+                                    {% include 'aviso//avisos.html' %}
+                              </div>
+                        </div>
+                  </div>
+            </div>
+      </div>     
+{% endif %}
+
+{% endblock %}

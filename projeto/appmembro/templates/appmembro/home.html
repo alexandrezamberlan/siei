@@ -1,0 +1,56 @@
+{% extends 'appmembro/base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block title %}
+      
+{% endblock %}
+
+{% block content %}
+      {% if user.is_authenticated %}
+            <div class="container-fluid">
+                  <!-- Primeira linha -->
+                  <div class="row">
+                  <div class="col-md-4">
+                        <!-- Conteúdo da primeira coluna -->
+                        <div class="panel panel-default">
+                        <div class="panel-heading"><b>Eventos ativos</b></div>
+                        <div class="panel-body">
+                              Total eventos: {{ request.user.total_eventos_ativos }}<br>
+                        </div>
+                        </div>
+                  </div>
+                  <div class="col-md-4">
+                        <!-- Conteúdo da segunda coluna -->
+                        <div class="panel panel-default">
+                        <div class="panel-heading"><b>Submissões</b></div>
+                        <div class="panel-body">
+                              Atenção
+                        </div>
+                        </div>
+                  </div>
+                  <div class="col-md-4">
+                        <!-- Conteúdo da terceira coluna -->
+                        <div class="panel panel-default">
+                        <div class="panel-heading"><b>Avaliações</b></div>
+                        <div class="panel-body">
+                              Atenção
+                        </div>
+                        </div>
+                  </div>
+                  </div>    
+                  <!-- Segunda linha -->
+                  <div class="row">
+                  <div class="col-md-12">
+                        <!-- Conteúdo da sexta coluna -->
+                        <div class="panel panel-default">
+                        <div class="panel-heading"><b>Avisos</b></div>
+                        <div class="panel-body">
+                              {% include 'aviso//avisos.html' %}
+                        </div>
+                        </div>
+                  </div>
+                  </div>
+            </div>
+      {% endif %}
+{% endblock %}
