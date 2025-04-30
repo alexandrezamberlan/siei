@@ -2,7 +2,7 @@
 
 Sistema Web Python-Django que gerencia registros de indicadores de atletas - SIEI | IFFar Santo Augusto
 
-Este projeto faz parte do Laboratório de Práticas da Computação UFN, em que alunos dos cursos da área de Computação podem praticar o desenvolvimento de sistema Web Python-Django. Além disso, é uma parceria com o professor de Educação Física Fabrício Doring Martins do IFF de Santo Augusto - RS.
+O Sistema de Informação para Coleta de Indicadores de Atletas em Esportes de Invasão (SIEI) é uma iniciativa do Instituto Federal Farroupilha – Campus Santo Augusto, sob coordenação do professor de Educação Física Fabrício Doring Martins. O projeto conta com a parceria do Laboratório de Práticas da Computação da Universidade Franciscana (UFN), onde alunos dos cursos da área de Computação contribuem com o desenvolvimento do sistema utilizando a tecnologia web Python-Django.
 
 O professor Fabrício Doring Martins (fabricio.martins@iffarroupilha.edu.br) foi jogador de voleibol com o Alexandre Zamberlan durante 10 anos.
 
