@@ -13,12 +13,14 @@ O professor Fabrício Doring Martins (fabricio.martins@iffarroupilha.edu.br) foi
     - Camille Rodrigues - Sistemas de Informação
     - Bruno Difante - Ciência da Computação
     - Gabriel Morais - Ciência da Computação
+    - Guilherme Henriques - Ciência da Computação
+    - Guilherme Scher - Ciência da Computação
     - Pedro Canabarro - Ciência da Computação
 
 ## Estruturação
 
 - apps
-    - usuario
+    - usuario - ADAPTAR
         - tipos: administrador, professor, estudante
         - nome
         - sexo
@@ -37,12 +39,12 @@ O professor Fabrício Doring Martins (fabricio.martins@iffarroupilha.edu.br) foi
                 - colocar campo de aceite dos termos de uso
                 - verificar se está mandando por email a ativação do usuário
     
-    - tipo_instituicao
+    - tipo_instituicao - CRIAR
         - descrição
         - is_active
         - slug
 
-    - instituição
+    - instituição - ADAPTAR
         - nome
         - sigla (opcional)
         - cidade
@@ -52,31 +54,31 @@ O professor Fabrício Doring Martins (fabricio.martins@iffarroupilha.edu.br) foi
         - is_active
         - slug
 
-    - indicador (fundamento) 
+    - indicador (fundamento) - CRIAR
         - descrição                
         - is_active
         - slug
         
-    - esporte
+    - esporte - CRIAR
         - descrição
         - lista de indicadores (vinculo com app indicador - manytomany)
         - is_active
         - slug
         
-    - avaliação
+    - avaliação - CRIAR
         - estudante (vinculo com app usuario do tipo estudante)
         - esporte (vinculo com app esporte)
         - is_active
         - slug
 
-    - registro_avaliacao
+    - registro_avaliacao - CRIAR
         - avaliacao
         - fundamento
         - resultado
         - is_active
         - slug
 
-    - relatórios
+    - relatórios - CRIAR
         - a discutir com o professor Fabrício
         
 
